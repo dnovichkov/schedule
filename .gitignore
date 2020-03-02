@@ -5,3 +5,7 @@ venv/*
 .env*
 *.log
 .idea/*
+build/*
+dist/*
+.pytest_cache/*
+schedule_dnovichkov.egg-info/*

@@ -13,14 +13,14 @@ class Schedule:
     """
 
     def __init__(self,
-                 start_dt: datetime.datime,
+                 start_dt: datetime.datetime,
                  end_dt: datetime.datetime = None,
                  duration: int = 0):
         """
         Create schedule
         :param start_dt:
         :param end_dt:
-        :param duration:
+        :param duration: Duration in seconds
         """
         if not duration and not end_dt:
             logging.error(f'Please, set end_dt or duration')
@@ -32,7 +32,7 @@ class Schedule:
         self.range = DateTimeRange(start_dt, end_dt)
         self.records = []
 
-    def add_record(self, rec_type, rec_range: DateTimeRange, add_data):
+    def add_record(self, rec_type, rec_range: DateTimeRange, add_data=None):
         """
         Add record
         :param rec_type:
