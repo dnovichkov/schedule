@@ -1,9 +1,9 @@
 # Schedule
 
-Tested for Python 3.8. 
+Tested for Python 3.8.
 
 Links for virtual env setting:
-[https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html) and 
+[https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html) and
 [https://virtualenv.pypa.io/en/stable/userguide/](https://docs.python.org/3/library/venv.html)
 
 For my Win-machine:
