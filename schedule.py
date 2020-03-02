@@ -32,8 +32,19 @@ class Schedule:
         self.range = DateTimeRange(start_dt, end_dt)
         self.records = []
 
-    def add_record(self, rec_type, rec_range, add_data):
+    def add_record(self, rec_type, rec_range: DateTimeRange, add_data):
+        """
+        Add record
+        :param rec_type:
+        :param rec_range:
+        :param add_data:
+        :return:
+        """
         record = {'type': rec_type, 'range': rec_range, 'data': add_data}
+        is_last = True
+        if self.records and rec_range.start_datetime <= self.records[-1]['range'].end.datetime:
+            is_last = False
         self.records.append(record)
-        self.records = sorted(
-            self.records, key=lambda record: record.start_datetime)
+        if not is_last:
+            self.records = sorted(
+                self.records, key=lambda record: record.start_datetime)
