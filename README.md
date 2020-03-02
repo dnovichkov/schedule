@@ -17,3 +17,4 @@ Requirements install:
 ```
 pip install -r requirements.txt
 ```
+If you want to manually run all pre-commit hooks on the repository, run `pre-commit run --all-files`. To run individual hooks use `pre-commit run <hook_id>`.

@@ -48,3 +48,20 @@ class Schedule:
         if not is_last:
             self.records = sorted(
                 self.records, key=lambda record: record.start_datetime)
+
+    def get_records_in_range(self, required_range: DateTimeRange):
+        """
+        Return records, which are:
+            1) located in required_range
+            2) intersected by required_range
+        :param required_range:
+        :return:
+        """
+        if not self.records:
+            return []
+        result = []
+        for record in self.records:
+            rec_range = record['range']
+            if required_range.is_intersection(rec_range):
+                result.append(record)
+        return result
