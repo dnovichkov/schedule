@@ -65,3 +65,18 @@ class Schedule:
             if required_range.is_intersection(rec_range):
                 result.append(record)
         return result
+
+    def change_record(self, old_record, new_record):
+        """
+        Modify records which are equal old record
+        :param old_record:
+        :param new_record:
+        :return:
+        """
+        if old_record not in self.records:
+            return False
+
+        for index, item in enumerate(self.records):
+            if item == old_record:
+                self.records[index] = new_record
+        return True
