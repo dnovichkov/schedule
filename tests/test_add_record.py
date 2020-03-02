@@ -14,3 +14,8 @@ def test_simple_add():
         start_datetime, start_datetime + datetime.timedelta(minutes=1))
     schedule.add_record('Test_type', _range)
     assert len(schedule.records) == 1
+
+    _range = DateTimeRange(
+        start_datetime + datetime.timedelta(minutes=1), start_datetime + datetime.timedelta(minutes=2))
+    schedule.add_record('Test_type', _range)
+    assert len(schedule.records) == 2
