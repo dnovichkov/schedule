@@ -80,3 +80,10 @@ class Schedule:
             if item == old_record:
                 self.records[index] = new_record
         return True
+
+    def clear(self):
+        """
+        Delete all records from schedule
+        :return:
+        """
+        self.records.clear()
