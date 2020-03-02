@@ -1,6 +1,6 @@
 # Schedule
 
-Tested for Python 3.8.
+Tested for Python 3.7.
 
 Links for virtual env setting:
 [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html) and
