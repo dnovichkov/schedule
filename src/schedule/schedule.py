@@ -24,6 +24,7 @@ class Schedule:
         """
         if not duration and not end_dt:
             logging.error(f'Please, set end_dt or duration')
+            end_dt = start_dt
         elif duration and end_dt:
             logging.error(f'Using end_dt and duration both is deprecated, '
                           f'use end_dt as default')
@@ -40,6 +41,8 @@ class Schedule:
         :param add_data:
         :return:
         """
+        if rec_range.end_datetime > self.range.end_datetime:
+            return False
         record = {'type': rec_type, 'range': rec_range, 'data': add_data}
         is_last = True
         if self.records and rec_range.start_datetime <= self.records[-1]['range'].end_datetime:
@@ -48,6 +51,7 @@ class Schedule:
         if not is_last:
             self.records = sorted(
                 self.records, key=lambda record: record['range'].start_datetime)
+        return True
 
     def get_records_in_range(self, required_range: DateTimeRange):
         """
