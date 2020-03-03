@@ -80,6 +80,7 @@ class Schedule:
         :return:
         """
         if old_record not in self.records:
+            logging.error(f'Record {old_record} not in schedule')
             return False
 
         for index, item in enumerate(self.records):
