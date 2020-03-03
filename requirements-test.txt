@@ -1,0 +1,4 @@
+DateTimeRange==0.6.1
+pre-commit==2.1.1
+pylint==2.4.2
+pytest==5.3.5

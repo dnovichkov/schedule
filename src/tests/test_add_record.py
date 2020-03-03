@@ -2,7 +2,6 @@ import datetime
 
 import pytest
 from datetimerange import DateTimeRange
-
 from schedule.schedule import Schedule
 
 
