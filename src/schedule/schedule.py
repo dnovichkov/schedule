@@ -18,9 +18,9 @@ class Schedule:
                  duration: int = 0):
         """
         Create schedule
-        :param start_dt:
-        :param end_dt:
-        :param duration: Duration in seconds
+        :param start_dt: Time point, all records must be started after this point.
+        :param end_dt: All records must be ended before this point.
+        :param duration: Duration in seconds - used only when end_dt is None.
         """
         if not duration and not end_dt:
             logging.error(f'Please, set end_dt or duration')
@@ -33,15 +33,17 @@ class Schedule:
         self.range = DateTimeRange(start_dt, end_dt)
         self.records = []
 
-    def add_record(self, rec_type, rec_range: DateTimeRange, add_data=None):
+    def add_record(self, rec_type: str, rec_range: DateTimeRange, add_data=None):
         """
-        Add record
+        Add record to schedule.
         :param rec_type:
-        :param rec_range:
+        :param rec_range: Must be placed in Schedule.range.
         :param add_data:
-        :return:
+        :return: Return True if record was added, else return False
         """
         if rec_range.end_datetime > self.range.end_datetime:
+            return False
+        if rec_range.start_datetime < self.range.start_datetime:
             return False
         record = {'type': rec_type, 'range': rec_range, 'data': add_data}
         is_last = True
@@ -59,7 +61,7 @@ class Schedule:
             1) located in required_range
             2) intersected by required_range
         :param required_range:
-        :return:
+        :return: List of records
         """
         if not self.records:
             return []
@@ -77,7 +79,7 @@ class Schedule:
         Modify records which are equal old record
         :param old_record:
         :param new_record:
-        :return:
+        :return: True, if old record is in schedule's records. Otherwise return False.
         """
         if old_record not in self.records:
             logging.error(f'Record {old_record} not in schedule')
