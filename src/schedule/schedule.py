@@ -62,7 +62,9 @@ class Schedule:
         result = []
         for record in self.records:
             rec_range = record['range']
-            if required_range.is_intersection(rec_range):
+            if required_range.is_intersection(rec_range) and \
+                    required_range.end_datetime != rec_range.start_datetime and \
+                    required_range.start_datetime != rec_range.end_datetime:
                 result.append(record)
         return result
 
