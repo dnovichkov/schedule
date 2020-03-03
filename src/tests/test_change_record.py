@@ -45,3 +45,27 @@ def test_change_record_range():
 
     assert 'range' in schedule.records[-1]
     assert schedule.records[-1]['range'] == new_range
+
+
+def test_change_record_data():
+    start_datetime = datetime.datetime(year=2020, month=1, day=1)
+    schedule = Schedule(start_datetime, duration=3600)
+
+    _range = DateTimeRange(
+        start_datetime, start_datetime + datetime.timedelta(minutes=1))
+    schedule.add_record('OLD TYPE', _range)
+
+    assert len(schedule.records) == 1
+    assert 'data' in schedule.records[-1]
+    assert schedule.records[-1]['data'] is None
+
+    existed_record = schedule.records[-1]
+
+    new_range = DateTimeRange(
+        start_datetime, start_datetime + datetime.timedelta(minutes=2))
+    new_record = {'type': 'NEW TYPE',
+                  'range': new_range, 'data': {'key': 'val'}}
+    schedule.change_record(existed_record, new_record)
+
+    assert 'data' in schedule.records[-1]
+    assert schedule.records[-1]['data'] == {'key': 'val'}
