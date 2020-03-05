@@ -55,6 +55,37 @@ class Schedule:
                 self.records, key=lambda record: record['range'].start_datetime)
         return True
 
+    def get_free_ranges(self, min_duration=None):
+        """
+        Return free ranges which are equal or greater than duration, if duration is set.
+        Otherwise return all free ranges.
+        :param min_duration: Duration in seconds.
+        :return:
+        """
+        if not self.records:
+            if not min_duration or min_duration <= self.range.get_timedelta_second():
+                return [self.range]
+            return []
+
+        result = []
+        if self.records[0].get('range').start_datetime != self.range.start_datetime:
+            result.append(DateTimeRange(self.range.start_datetime,
+                                        self.records[0].get('range').start_datetime))
+        if self.records[-1].get('range').end_datetime != self.range.end_datetime:
+            result.append(DateTimeRange(
+                self.records[-1].get('range').end_datetime, self.range.end_datetime))
+
+        for i in range(0, len(self.records) - 1):
+            rec_1_end = self.records[i].get('range').end_datetime
+            rec_2__start = self.records[i + 1].get('range').start_datetime
+            if rec_1_end != rec_2__start:
+                result.append(DateTimeRange(rec_1_end, rec_2__start))
+        result.sort(key=lambda _record: _record.end_datetime)
+        if min_duration:
+            result = list(
+                filter(lambda x: x.get_timedelta_second() >= min_duration, result))
+        return result
+
     def get_records_in_range(self, required_range: DateTimeRange):
         """
         Return records, which are:
