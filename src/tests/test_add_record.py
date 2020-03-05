@@ -57,6 +57,11 @@ def test_failed_add_to_schedule_range():
     assert not schedule.add_record('Test_type', _range)
     assert len(schedule.records) == 0
 
+    _range = DateTimeRange(
+        start_datetime - datetime.timedelta(minutes=1), start_datetime + datetime.timedelta(seconds=2))
+    assert not schedule.add_record('Test_type', _range)
+    assert len(schedule.records) == 0
+
 
 def test_simple_add_to_schedule_duration_and_range(caplog):
     caplog.set_level(logging.INFO)
