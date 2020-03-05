@@ -16,11 +16,15 @@ def test_get_ranges_without_duration():
     assert [] == schedule.get_free_ranges(7200)
 
     range_1 = DateTimeRange(
-        start_datetime, start_datetime + datetime.timedelta(minutes=1))
+        start_datetime + datetime.timedelta(seconds=1), start_datetime + datetime.timedelta(minutes=1))
     assert schedule.add_record('SOME TYPE', range_1)
     assert [] == schedule.get_free_ranges(7200)
-    assert [DateTimeRange(range_1.end_datetime, end_datetime)
-            ] == schedule.get_free_ranges()
+    expected_free_ranges = \
+        [
+            DateTimeRange(start_datetime, range_1.start_datetime),
+            DateTimeRange(range_1.end_datetime, end_datetime)
+        ]
+    assert expected_free_ranges == schedule.get_free_ranges()
 
     range_2 = DateTimeRange(start_datetime + datetime.timedelta(minutes=10),
                             start_datetime + datetime.timedelta(minutes=11))
@@ -28,6 +32,7 @@ def test_get_ranges_without_duration():
 
     expected_free_ranges = \
         [
+            DateTimeRange(start_datetime, range_1.start_datetime),
             DateTimeRange(range_1.end_datetime, range_2.start_datetime),
             DateTimeRange(range_2.end_datetime, end_datetime),
         ]
@@ -39,6 +44,7 @@ def test_get_ranges_without_duration():
 
     expected_free_ranges = \
         [
+            DateTimeRange(start_datetime, range_1.start_datetime),
             DateTimeRange(range_1.end_datetime, range_2.start_datetime),
             DateTimeRange(range_2.end_datetime, range_3.start_datetime),
         ]
